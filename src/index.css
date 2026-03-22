@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme {
+  --color-meditation-dark: #0f172a;
+  --color-meditation-light: #1e293b;
+  --color-meditation-accent: #6366f1;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+}
