@@ -1,27 +1,13 @@
 // Direct client-side calls to ElevenLabs API
-// No proxy needed — ElevenLabs supports CORS
-
 const API_BASE = 'https://api.elevenlabs.io';
-
-// API key is stored in localStorage so it persists on your phone
-export function getApiKey(): string {
-  return localStorage.getItem('elevenlabs_api_key') || '';
-}
-
-export function setApiKey(key: string): void {
-  localStorage.setItem('elevenlabs_api_key', key);
-}
-
-export function hasApiKey(): boolean {
-  return !!getApiKey();
-}
+const API_KEY = 'sk_e56c8b3576c15dbcc1fe9554166afdcf63cffd1b88a7187a';
 
 function getHeaders(): Record<string, string> {
-  return { 'xi-api-key': getApiKey() };
+  return { 'xi-api-key': API_KEY };
 }
 
 function jsonHeaders(): Record<string, string> {
-  return { 'xi-api-key': getApiKey(), 'Content-Type': 'application/json' };
+  return { 'xi-api-key': API_KEY, 'Content-Type': 'application/json' };
 }
 
 // ── Voices ──
