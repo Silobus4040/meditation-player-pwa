@@ -1,9 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import {
   Play, Pause, SkipForward, SkipBack, Repeat, Repeat1,
-  ListMusic, Sparkles, Loader2, ChevronDown, Volume2, X
+  ListMusic, Sparkles, Loader2, ChevronDown, Volume2, X, Wand2
 } from 'lucide-react';
 import { fetchVoices, generateTTS, type ElevenVoice } from './utils/elevenlabs';
+import { enhanceWithEmotionTags } from './utils/enhance';
 
 type RepeatMode = 'none' | 'all' | 'one';
 
@@ -226,7 +227,19 @@ export default function App() {
               placeholder={"Enter a Bible verse for meditation...\n\ne.g. Psalm 23:1 — The Lord is my shepherd; I shall not want."}
               rows={6}
               className="w-full bg-slate-800/60 border border-white/10 rounded-xl px-4 py-3 text-sm text-slate-200 placeholder-slate-600 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500/50 leading-relaxed" />
-            <p className="text-[10px] text-slate-600 mt-1 text-right">{verseText.length} / 5,000</p>
+            <div className="flex items-center justify-between mt-1.5">
+              <button
+                type="button"
+                onClick={() => setVerseText(enhanceWithEmotionTags(verseText))}
+                disabled={!verseText.trim()}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[11px] font-semibold transition-all disabled:opacity-30 disabled:cursor-not-allowed bg-gradient-to-r from-purple-600/20 to-indigo-600/20 border border-purple-500/30 text-purple-300 hover:from-purple-600/30 hover:to-indigo-600/30 active:scale-95"
+              >
+                <Wand2 className="w-3 h-3" />
+                <span className="bg-gradient-to-r from-purple-300 to-indigo-300 bg-clip-text text-transparent font-bold">v3</span>
+                Enhance
+              </button>
+              <p className="text-[10px] text-slate-600">{verseText.length} / 5,000</p>
+            </div>
           </div>
 
           <button onClick={handleGenerate}
