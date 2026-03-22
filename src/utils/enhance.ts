@@ -123,18 +123,24 @@ function detectEmotion(sentence: string): string | null {
 }
 
 function splitIntoSentences(text: string): string[] {
-  // Split on sentence-ending punctuation, keeping the punctuation
-  const raw = text.split(/(?<=[.!?…;:])\s+/);
+  // Use a regex that is supported everywhere (no lookbehind)
+  const raw = text.split(/([.!?…;:]\s+)/);
   
-  // Merge very short fragments back together
   const merged: string[] = [];
-  for (const s of raw) {
-    const trimmed = s.trim();
-    if (!trimmed) continue;
-    if (merged.length > 0 && merged[merged.length - 1].length < 30) {
-      merged[merged.length - 1] += ' ' + trimmed;
-    } else {
-      merged.push(trimmed);
+  let current = '';
+  
+  for (let i = 0; i < raw.length; i++) {
+    current += raw[i];
+    if (i % 2 !== 0 || i === raw.length - 1) { // It's the delimiter or the end
+      const trimmed = current.trim();
+      if (trimmed) {
+        if (merged.length > 0 && merged[merged.length - 1].length < 30) {
+          merged[merged.length - 1] += ' ' + trimmed;
+        } else {
+          merged.push(trimmed);
+        }
+      }
+      current = '';
     }
   }
   return merged;
